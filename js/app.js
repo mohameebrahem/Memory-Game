@@ -1,16 +1,23 @@
 const controlButtons = document.querySelector('.control-buttons');
 const playerName = document.querySelector('.info-container span');
 const duration = 1000;
+
 controlButtons.addEventListener('click', () => {
   let userName = prompt('whats your name');
 
   if (userName == null || userName == '') {
-    playerName.innerHTML = 'UNKNOWN';
+    playerName.innerHTML = 'Dear';
   } else {
-    playerName.innerHTML = userName;
+    playerName.innerHTML = userName[0].toUpperCase() + userName.slice(1);
   }
+
+  blocks.forEach((block) => block.classList.add('is-flipped'));
   controlButtons.remove();
+  setTimeout(() => {
+    blocks.forEach((block) => block.classList.remove('is-flipped'));
+  }, 500);
 });
+
 const blocksContainer = document.querySelector('.memory-game-blocks');
 const blocks = Array.from(blocksContainer.children);
 const orderRange = Array.from(Array(blocks.length).keys());
@@ -53,7 +60,7 @@ function stopClicking() {
 }
 function check(f, s) {
   let wrongTriesEl = document.querySelector('.tries span');
-  if (f.dataset.technology == s.dataset.technology) {
+  if (f.dataset.memory == s.dataset.memory) {
     f.classList.remove('is-flipped');
     s.classList.remove('is-flipped');
     f.classList.add('has-match');
